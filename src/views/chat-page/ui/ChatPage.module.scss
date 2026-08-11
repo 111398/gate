@@ -1,0 +1,13 @@
+@use "../../../app/styles/tokens" as *;
+
+.wrapper {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.intro {
+  padding: var(--space-4) var(--space-4) 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  max-width: 480px;
+}
