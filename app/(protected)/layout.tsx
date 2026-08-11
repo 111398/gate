@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { SignOutButton } from "@/features/auth-by-email";
 import { createSupabaseServerClient } from "@/shared/api/supabase/server-client";
@@ -18,7 +19,15 @@ export default async function ProtectedLayout({ children }: { children: React.Re
     <div className={styles.wrapper}>
       <header className={styles.header}>
         <span className={styles.brand}>Gate</span>
-        <SignOutButton />
+        <nav className={styles.nav}>
+          <Link href="/chat" className={styles.navLink}>
+            Чат
+          </Link>
+          <Link href="/settings" className={styles.navLink}>
+            Настройки
+          </Link>
+          <SignOutButton />
+        </nav>
       </header>
       <ConsentModal />
       <div className={styles.content}>{children}</div>
