@@ -1,12 +1,13 @@
-import { Button } from "@/shared/ui/Button";
+import { redirect } from "next/navigation";
+import { createSupabaseServerClient } from "@/shared/api/supabase/server-client";
 
-// Редирект на /chat | /onboarding | /login будет реализован на этапе 3 (регистрация + согласия),
-// когда появится сессия Supabase Auth и состояние персоны.
-// Кнопка ниже — временная проверка сборки FSD/SCSS/React Aria стека, уйдёт на этапе 3.
-export default function RootPage() {
-  return (
-    <main style={{ padding: 24 }}>
-      <Button>Gate</Button>
-    </main>
-  );
+// Персона появится в этапе 4 — тогда сюда добавится ветвление /onboarding vs /chat
+// по personas.status. Пока после входа всегда ведём в онбординг.
+export default async function RootPage() {
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  redirect(user ? "/onboarding" : "/login");
 }
