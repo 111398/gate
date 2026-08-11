@@ -21,7 +21,7 @@ export default async function ProtectedLayout({ children }: { children: React.Re
         <SignOutButton />
       </header>
       <ConsentModal />
-      {children}
+      <div className={styles.content}>{children}</div>
     </div>
   );
 }

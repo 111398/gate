@@ -1,0 +1,75 @@
+@use "../../../app/styles/tokens" as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.bubbleUser,
+.bubblePersona {
+  max-width: 80%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.bubbleUser {
+  align-self: flex-end;
+  background: var(--color-bubble-user);
+  color: var(--color-bubble-user-text);
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+.bubblePersona {
+  align-self: flex-start;
+  background: var(--color-bubble-persona);
+  color: var(--color-bubble-persona-text);
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+.error {
+  margin: 0 var(--space-4) var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
+}
+
+.inputRow {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.input {
+  flex: 1;
+  height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md);
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: -1px;
+    border-color: var(--color-accent);
+  }
+}

@@ -1,12 +1,14 @@
 @use "../../src/app/styles/tokens" as *;
 
 .wrapper {
-  min-height: 100dvh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .header {
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -18,4 +20,9 @@
 .brand {
   font-weight: 700;
   font-size: var(--font-size-md);
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
 }
