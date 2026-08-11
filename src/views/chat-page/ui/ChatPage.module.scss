@@ -2,12 +2,25 @@
 
 .wrapper {
   height: 100%;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.intro {
-  padding: var(--space-4) var(--space-4) 0;
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-  max-width: 480px;
+.toolbar {
+  flex: none;
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-3) var(--space-4) 0;
+}
+
+.uploadSection {
+  flex: none;
+  max-height: 40%;
+  overflow-y: auto;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.chatSection {
+  flex: 1;
+  min-height: 0;
 }
