@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { RegisterServiceWorker } from "./register-service-worker";
 import { TRPCProvider } from "./trpc-provider";
 
 // SupabaseProvider подключается по необходимости (см. shared/api/supabase) —
@@ -10,7 +11,10 @@ export async function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <TRPCProvider>{children}</TRPCProvider>
+      <TRPCProvider>
+        <RegisterServiceWorker />
+        {children}
+      </TRPCProvider>
     </NextIntlClientProvider>
   );
 }

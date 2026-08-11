@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { getTranslations } from "next-intl/server";
 import { Providers } from "@/app/providers";
 import { DEFAULT_LOCALE } from "@/shared/config/i18n";
@@ -11,6 +11,13 @@ export async function generateMetadata(): Promise<Metadata> {
     description: t("description"),
   };
 }
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#2f80ed" },
+    { media: "(prefers-color-scheme: dark)", color: "#5b9bf7" },
+  ],
+};
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

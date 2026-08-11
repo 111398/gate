@@ -112,5 +112,9 @@
   },
   "Safety": {
     "crisisResponse": "I'm sorry you're going through such a hard time right now — and I'm glad you told me about it.\n\nPlease reach out for help right now — it matters, and you deserve support. Free 24/7 mental health helpline: {hotline}.\n\nIf there is immediate danger to life, please call emergency services or reach out to someone close who can be with you right now.\n\nI'm a companion app, not a specialist, and I can't replace professional help in a situation like this."
+  },
+  "Offline": {
+    "title": "You're offline",
+    "body": "Looks like there's no internet connection right now. Check your connection and reload the page."
   }
 }
