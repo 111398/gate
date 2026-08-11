@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
+import { useTranslations } from "next-intl";
 import { Button } from "@/shared/ui/Button";
 import { CHAT_KICKOFF_MARKER } from "@/shared/config/persona";
 import styles from "./OnboardingChat.module.scss";
@@ -19,6 +20,7 @@ function hasCompletedOnboardingTool(parts: { type: string; state?: string }[]): 
 }
 
 export function OnboardingChat({ onCompleted }: { onCompleted: () => void }) {
+  const t = useTranslations("Chat");
   const [transport] = useState(() => new DefaultChatTransport({ api: "/api/chat" }));
   const { messages, sendMessage, status, error, clearError } = useChat({ transport });
   const [input, setInput] = useState("");
@@ -93,7 +95,7 @@ export function OnboardingChat({ onCompleted }: { onCompleted: () => void }) {
 
       {error && (
         <p className={styles.error} role="alert">
-          Не получилось получить ответ. Попробуйте отправить сообщение ещё раз.
+          {t("errorRetry")}
         </p>
       )}
 
@@ -102,12 +104,12 @@ export function OnboardingChat({ onCompleted }: { onCompleted: () => void }) {
           className={styles.input}
           value={input}
           onChange={(event) => setInput(event.target.value)}
-          placeholder="Напишите сообщение…"
+          placeholder={t("messagePlaceholder")}
           disabled={!canSubmit}
-          aria-label="Сообщение"
+          aria-label={t("messagePlaceholder")}
         />
         <Button type="submit" isDisabled={!canSubmit || !input.trim()}>
-          Отправить
+          {t("send")}
         </Button>
       </form>
     </div>

@@ -1,20 +1,18 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { trpc } from "@/shared/api/trpc/client";
-import {
-  INTERACTION_FREQUENCIES,
-  INTERACTION_FREQUENCY_LABELS,
-  type InteractionFrequency,
-} from "@/shared/config/persona";
+import { INTERACTION_FREQUENCIES, type InteractionFrequency } from "@/shared/config/persona";
 import { Select } from "@/shared/ui/Select";
 
-const OPTIONS = INTERACTION_FREQUENCIES.map((value) => ({
-  id: value,
-  label: INTERACTION_FREQUENCY_LABELS[value],
-}));
-
 export function InteractionFrequencySelect({ value }: { value: InteractionFrequency }) {
+  const t = useTranslations("Settings");
   const utils = trpc.useUtils();
+
+  const options = INTERACTION_FREQUENCIES.map((freq) => ({
+    id: freq,
+    label: t(`frequencyOptions.${freq}`),
+  }));
 
   const mutation = trpc.persona.setInteractionFrequency.useMutation({
     onMutate: async (input) => {
@@ -37,8 +35,8 @@ export function InteractionFrequencySelect({ value }: { value: InteractionFreque
 
   return (
     <Select
-      label="Частота сообщений от персоны"
-      options={OPTIONS}
+      label={t("frequencyLabel")}
+      options={options}
       selectedKey={value}
       onSelectionChange={(key) => mutation.mutate({ interactionFrequency: key as InteractionFrequency })}
     />

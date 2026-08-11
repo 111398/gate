@@ -1,10 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createSupabaseBrowserClient } from "@/shared/api/supabase/browser-client";
 import { Button } from "@/shared/ui/Button";
 
 export function SignOutButton() {
+  const t = useTranslations("Layout");
   const router = useRouter();
 
   async function handleSignOut() {
@@ -16,7 +18,7 @@ export function SignOutButton() {
 
   return (
     <Button variant="secondary" onPress={handleSignOut}>
-      Выйти
+      {t("signOut")}
     </Button>
   );
 }

@@ -1,0 +1,116 @@
+{
+  "Metadata": {
+    "title": "Gate",
+    "description": "A companion app for people grieving the loss of a loved one"
+  },
+  "Layout": {
+    "brand": "Gate",
+    "navChat": "Chat",
+    "navSettings": "Settings",
+    "signOut": "Sign out"
+  },
+  "Auth": {
+    "loginSubtitle": "Sign in to your account",
+    "registerSubtitle": "Registration is only available with a .ru email address",
+    "emailLabel": "Email",
+    "emailDescription": "Only .ru domains",
+    "passwordLabel": "Password",
+    "signUpSubmit": "Sign up",
+    "signUpSubmitting": "Creating account…",
+    "signInSubmit": "Sign in",
+    "signInSubmitting": "Signing in…",
+    "noAccount": "Don't have an account?",
+    "signUpLink": "Sign up",
+    "haveAccount": "Already have an account?",
+    "signInLink": "Sign in",
+    "confirmationSent": "We've sent a confirmation email to {email}. Follow the link in the email, then sign in.",
+    "validation": {
+      "emailRequired": "Enter your email",
+      "emailInvalid": "Invalid email",
+      "emailDomainNotAllowed": "Registration is only available with a .ru email address",
+      "passwordTooShort": "Password must be at least 8 characters",
+      "passwordRequired": "Enter your password"
+    }
+  },
+  "Consents": {
+    "modalTitle": "Before you continue",
+    "modalIntro": "To use Gate, you need to accept two consents. Both are required.",
+    "submit": "Continue",
+    "submitting": "Saving…",
+    "error": "Could not save your consent. Please try again.",
+    "types": {
+      "training_data": {
+        "title": "Consent to use materials",
+        "body": "I consent to the use of the texts and correspondence of a real person, which I upload, to train the RAG model of their persona in the Gate app."
+      },
+      "not_a_replacement": {
+        "title": "Understanding the limitations",
+        "body": "I understand that Gate does not replace a real person and is not a substitute for professional psychological help. If I struggle to cope with the loss, I will reach out to specialists or people close to me."
+      }
+    }
+  },
+  "Chat": {
+    "messagePlaceholder": "Type a message…",
+    "send": "Send",
+    "errorRetry": "Couldn't get a response. Please try sending your message again.",
+    "loading": "Loading…",
+    "emptyState": "Write your first message to start the conversation."
+  },
+  "Onboarding": {
+    "redirecting": "Taking you to chat…"
+  },
+  "ChatPage": {
+    "showUpload": "Upload materials",
+    "hideUpload": "Hide materials"
+  },
+  "TrainingFiles": {
+    "typeLabel": "Material type",
+    "types": {
+      "chat_export": "Chat export (.txt/.json)",
+      "text_note": "Note"
+    },
+    "fileLabel": "File (.txt, .json, up to 5 MB)",
+    "submit": "Upload",
+    "submitting": "Uploading…",
+    "noFileError": "Choose a file",
+    "uploadError": "Couldn't upload the file",
+    "statusProcessed": "processed",
+    "statusPending": "processing…"
+  },
+  "Settings": {
+    "personaSectionTitle": "Persona",
+    "personaNoName": "No name",
+    "frequencyLabel": "Message frequency from the persona",
+    "frequencyOptions": {
+      "daily": "Every day",
+      "few_times_week": "A few times a week",
+      "weekly": "Once a week",
+      "manual": "Only when I write first"
+    },
+    "consentsSectionTitle": "Consents",
+    "dangerZoneTitle": "Danger zone",
+    "deletePersona": "Delete persona",
+    "deleteConfirmTitle": "Delete this persona permanently?",
+    "deleteConfirmBody": "All uploaded materials, the persona's memory, and the entire message history will be deleted. This action cannot be undone.",
+    "cancel": "Cancel",
+    "deleteConfirmAction": "Delete permanently",
+    "deleting": "Deleting…",
+    "deleteError": "Couldn't delete. Please try again.",
+    "feedbackSectionTitle": "Feedback"
+  },
+  "Feedback": {
+    "typeLabel": "Type",
+    "types": {
+      "complaint": "Complaint",
+      "suggestion": "Suggestion"
+    },
+    "messageLabel": "Message",
+    "messagePlaceholder": "Describe the issue or idea…",
+    "submit": "Send",
+    "submitting": "Sending…",
+    "success": "Thank you! Your message has been sent."
+  },
+  "Safety": {
+    "crisisResponse": "I'm sorry you're going through such a hard time right now — and I'm glad you told me about it.\n\nPlease reach out for help right now — it matters, and you deserve support. Free 24/7 mental health helpline: {hotline}.\n\nIf there is immediate danger to life, please call emergency services or reach out to someone close who can be with you right now.\n\nI'm a companion app, not a specialist, and I can't replace professional help in a situation like this."
+  }
+}

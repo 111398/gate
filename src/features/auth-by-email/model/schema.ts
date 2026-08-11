@@ -1,21 +1,27 @@
 import { z } from "zod";
 import { isAllowedEmailDomain } from "@/shared/config/email";
 
-export const signUpSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Введите email")
-    .email("Некорректный email")
-    .refine(isAllowedEmailDomain, {
-      message: "Регистрация доступна только с email на домене .ru",
-    }),
-  password: z.string().min(8, "Пароль должен быть не короче 8 символов"),
-});
+type ValidationMessages = (key: string) => string;
 
-export const signInSchema = z.object({
-  email: z.string().min(1, "Введите email").email("Некорректный email"),
-  password: z.string().min(1, "Введите пароль"),
-});
+export function createSignUpSchema(t: ValidationMessages) {
+  return z.object({
+    email: z
+      .string()
+      .min(1, t("emailRequired"))
+      .email(t("emailInvalid"))
+      .refine(isAllowedEmailDomain, {
+        message: t("emailDomainNotAllowed"),
+      }),
+    password: z.string().min(8, t("passwordTooShort")),
+  });
+}
 
-export type SignUpInput = z.infer<typeof signUpSchema>;
-export type SignInInput = z.infer<typeof signInSchema>;
+export function createSignInSchema(t: ValidationMessages) {
+  return z.object({
+    email: z.string().min(1, t("emailRequired")).email(t("emailInvalid")),
+    password: z.string().min(1, t("passwordRequired")),
+  });
+}
+
+export type SignUpInput = z.infer<ReturnType<typeof createSignUpSchema>>;
+export type SignInInput = z.infer<ReturnType<typeof createSignInSchema>>;

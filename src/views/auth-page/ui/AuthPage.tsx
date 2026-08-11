@@ -1,18 +1,19 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { SignInForm, SignUpForm } from "@/features/auth-by-email";
 import styles from "./AuthPage.module.scss";
 
-export function AuthPage({ mode }: { mode: "login" | "register" }) {
+export async function AuthPage({ mode }: { mode: "login" | "register" }) {
   const isLogin = mode === "login";
+  const t = await getTranslations("Auth");
+  const tLayout = await getTranslations("Layout");
 
   return (
     <main className={styles.wrapper}>
       <div className={styles.card}>
         <div>
-          <h1 className={styles.title}>Gate</h1>
-          <p className={styles.subtitle}>
-            {isLogin ? "Войдите в аккаунт" : "Регистрация доступна только с email на домене .ru"}
-          </p>
+          <h1 className={styles.title}>{tLayout("brand")}</h1>
+          <p className={styles.subtitle}>{isLogin ? t("loginSubtitle") : t("registerSubtitle")}</p>
         </div>
 
         {isLogin ? <SignInForm /> : <SignUpForm />}
@@ -20,11 +21,11 @@ export function AuthPage({ mode }: { mode: "login" | "register" }) {
         <p className={styles.switchLink}>
           {isLogin ? (
             <>
-              Нет аккаунта? <Link href="/register">Зарегистрироваться</Link>
+              {t("noAccount")} <Link href="/register">{t("signUpLink")}</Link>
             </>
           ) : (
             <>
-              Уже есть аккаунт? <Link href="/login">Войти</Link>
+              {t("haveAccount")} <Link href="/login">{t("signInLink")}</Link>
             </>
           )}
         </p>

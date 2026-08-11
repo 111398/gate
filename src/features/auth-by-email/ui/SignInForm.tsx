@@ -2,13 +2,16 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createSupabaseBrowserClient } from "@/shared/api/supabase/browser-client";
 import { Button } from "@/shared/ui/Button";
 import { TextField } from "@/shared/ui/TextField";
-import { signInSchema } from "../model/schema";
+import { createSignInSchema } from "../model/schema";
 import styles from "./AuthForm.module.scss";
 
 export function SignInForm() {
+  const t = useTranslations("Auth");
+  const tValidation = useTranslations("Auth.validation");
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +23,7 @@ export function SignInForm() {
     event.preventDefault();
     setFormError(null);
 
-    const parsed = signInSchema.safeParse({ email, password });
+    const parsed = createSignInSchema(tValidation).safeParse({ email, password });
     if (!parsed.success) {
       const errors = parsed.error.flatten().fieldErrors;
       setFieldErrors({ email: errors.email?.[0], password: errors.password?.[0] });
@@ -46,7 +49,7 @@ export function SignInForm() {
   return (
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
       <TextField
-        label="Email"
+        label={t("emailLabel")}
         inputType="email"
         value={email}
         onChange={setEmail}
@@ -55,7 +58,7 @@ export function SignInForm() {
         autoComplete="email"
       />
       <TextField
-        label="Пароль"
+        label={t("passwordLabel")}
         inputType="password"
         value={password}
         onChange={setPassword}
@@ -69,7 +72,7 @@ export function SignInForm() {
         </p>
       )}
       <Button type="submit" isDisabled={isSubmitting} className={styles.submit}>
-        {isSubmitting ? "Входим…" : "Войти"}
+        {isSubmitting ? t("signInSubmitting") : t("signInSubmit")}
       </Button>
     </form>
   );

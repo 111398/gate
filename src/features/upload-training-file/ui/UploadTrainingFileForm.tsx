@@ -1,28 +1,30 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { useTranslations } from "next-intl";
 import { trpc } from "@/shared/api/trpc/client";
-import { TRAINING_FILE_TYPE_LABELS, TRAINING_FILE_TYPES } from "@/shared/config/training-file";
+import { TRAINING_FILE_TYPES } from "@/shared/config/training-file";
 import { Button } from "@/shared/ui/Button";
 import { Select } from "@/shared/ui/Select";
 import styles from "./UploadTrainingFileForm.module.scss";
 
-const FILE_TYPE_OPTIONS = TRAINING_FILE_TYPES.map((type) => ({
-  id: type,
-  label: TRAINING_FILE_TYPE_LABELS[type],
-}));
-
 export function UploadTrainingFileForm() {
+  const t = useTranslations("TrainingFiles");
   const utils = trpc.useUtils();
   const [file, setFile] = useState<File | null>(null);
   const [fileType, setFileType] = useState<string>(TRAINING_FILE_TYPES[0]);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const fileTypeOptions = TRAINING_FILE_TYPES.map((type) => ({
+    id: type,
+    label: t(`types.${type}`),
+  }));
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!file) {
-      setError("Выберите файл");
+      setError(t("noFileError"));
       return;
     }
 
@@ -37,7 +39,7 @@ export function UploadTrainingFileForm() {
       const response = await fetch("/api/ingest", { method: "POST", body: formData });
       if (!response.ok) {
         const body = await response.json().catch(() => null);
-        setError(body?.error ?? "Не удалось загрузить файл");
+        setError(body?.error ?? t("uploadError"));
         return;
       }
       setFile(null);
@@ -50,14 +52,14 @@ export function UploadTrainingFileForm() {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <Select
-        label="Тип материала"
-        options={FILE_TYPE_OPTIONS}
+        label={t("typeLabel")}
+        options={fileTypeOptions}
         selectedKey={fileType}
         onSelectionChange={setFileType}
       />
 
       <label className={styles.fileField}>
-        <span className={styles.fileLabel}>Файл (.txt, .json, до 5 МБ)</span>
+        <span className={styles.fileLabel}>{t("fileLabel")}</span>
         <input
           className={styles.fileInput}
           type="file"
@@ -73,7 +75,7 @@ export function UploadTrainingFileForm() {
       )}
 
       <Button type="submit" isDisabled={isUploading || !file}>
-        {isUploading ? "Загружаем…" : "Загрузить"}
+        {isUploading ? t("submitting") : t("submit")}
       </Button>
     </form>
   );

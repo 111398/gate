@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Providers } from "@/app/providers";
+import { DEFAULT_LOCALE } from "@/shared/config/i18n";
 import "@/app/styles/globals.scss";
 
-export const metadata: Metadata = {
-  title: "Gate",
-  description: "Приложение-компаньон для переживающих утрату близкого человека",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Metadata");
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ru">
+    <html lang={DEFAULT_LOCALE}>
       <body>
         <Providers>{children}</Providers>
       </body>

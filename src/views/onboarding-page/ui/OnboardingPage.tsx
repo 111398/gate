@@ -2,11 +2,14 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { OnboardingChat } from "@/features/onboarding-dialog";
 import { trpc } from "@/shared/api/trpc/client";
 import styles from "./OnboardingPage.module.scss";
 
 export function OnboardingPage() {
+  const t = useTranslations("Chat");
+  const tOnboarding = useTranslations("Onboarding");
   const router = useRouter();
   const utils = trpc.useUtils();
   const { data: persona, isLoading } = trpc.persona.getCurrent.useQuery();
@@ -20,7 +23,7 @@ export function OnboardingPage() {
   if (isLoading || !persona) {
     return (
       <div className={styles.wrapper}>
-        <p className={styles.status}>Загрузка…</p>
+        <p className={styles.status}>{t("loading")}</p>
       </div>
     );
   }
@@ -28,7 +31,7 @@ export function OnboardingPage() {
   if (persona.status !== "onboarding") {
     return (
       <div className={styles.wrapper}>
-        <p className={styles.status}>Переходим в чат…</p>
+        <p className={styles.status}>{tOnboarding("redirecting")}</p>
       </div>
     );
   }

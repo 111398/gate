@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useTranslations } from "next-intl";
 import { toUIMessages, usePersonaChat } from "@/features/send-message";
 import { trpc } from "@/shared/api/trpc/client";
 import { Button } from "@/shared/ui/Button";
@@ -14,12 +15,13 @@ function messageText(parts: { type: string; text?: string }[]): string {
 }
 
 export function ChatWindow() {
+  const t = useTranslations("Chat");
   const { data: history, isLoading } = trpc.messages.getHistory.useQuery({ limit: 30 });
 
   if (isLoading || !history) {
     return (
       <div className={styles.wrapper}>
-        <p className={styles.status}>Загрузка…</p>
+        <p className={styles.status}>{t("loading")}</p>
       </div>
     );
   }
@@ -28,6 +30,7 @@ export function ChatWindow() {
 }
 
 function ChatWindowReady({ initialItems }: { initialItems: Parameters<typeof toUIMessages>[0] }) {
+  const t = useTranslations("Chat");
   const [initialMessages] = useState(() => toUIMessages(initialItems));
   const { messages, sendMessage, status, error, clearError } = usePersonaChat(initialMessages);
   const [input, setInput] = useState("");
@@ -54,9 +57,7 @@ function ChatWindowReady({ initialItems }: { initialItems: Parameters<typeof toU
   return (
     <div className={styles.wrapper}>
       <div className={styles.messages}>
-        {messages.length === 0 && (
-          <p className={styles.empty}>Напишите первое сообщение, чтобы начать разговор.</p>
-        )}
+        {messages.length === 0 && <p className={styles.empty}>{t("emptyState")}</p>}
         {messages.map((message) => {
           const text = messageText(message.parts);
           if (!text) return null;
@@ -79,7 +80,7 @@ function ChatWindowReady({ initialItems }: { initialItems: Parameters<typeof toU
 
       {error && (
         <p className={styles.error} role="alert">
-          Не получилось получить ответ. Попробуйте отправить сообщение ещё раз.
+          {t("errorRetry")}
         </p>
       )}
 
@@ -88,12 +89,12 @@ function ChatWindowReady({ initialItems }: { initialItems: Parameters<typeof toU
           className={styles.input}
           value={input}
           onChange={(event) => setInput(event.target.value)}
-          placeholder="Напишите сообщение…"
+          placeholder={t("messagePlaceholder")}
           disabled={!canSubmit}
-          aria-label="Сообщение"
+          aria-label={t("messagePlaceholder")}
         />
         <Button type="submit" isDisabled={!canSubmit || !input.trim()}>
-          Отправить
+          {t("send")}
         </Button>
       </form>
     </div>

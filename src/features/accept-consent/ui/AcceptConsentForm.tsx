@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CONSENT_TEXTS } from "@/entities/consent";
+import { useTranslations } from "next-intl";
 import { trpc } from "@/shared/api/trpc/client";
 import type { ConsentType } from "@/shared/config/consents";
 import { Button } from "@/shared/ui/Button";
@@ -9,6 +9,7 @@ import { Checkbox } from "@/shared/ui/Checkbox";
 import styles from "./AcceptConsentForm.module.scss";
 
 export function AcceptConsentForm({ missingTypes }: { missingTypes: ConsentType[] }) {
+  const t = useTranslations("Consents");
   const utils = trpc.useUtils();
   const [checked, setChecked] = useState<Partial<Record<ConsentType, boolean>>>({});
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +25,7 @@ export function AcceptConsentForm({ missingTypes }: { missingTypes: ConsentType[
       }
       await utils.consents.list.invalidate();
     } catch {
-      setError("Не удалось сохранить согласие. Попробуйте ещё раз.");
+      setError(t("error"));
     }
   }
 
@@ -36,7 +37,7 @@ export function AcceptConsentForm({ missingTypes }: { missingTypes: ConsentType[
             isSelected={!!checked[type]}
             onChange={(isSelected) => setChecked((prev) => ({ ...prev, [type]: isSelected }))}
           >
-            <strong>{CONSENT_TEXTS[type].title}.</strong> {CONSENT_TEXTS[type].body}
+            <strong>{t(`types.${type}.title`)}.</strong> {t(`types.${type}.body`)}
           </Checkbox>
         </div>
       ))}
@@ -52,7 +53,7 @@ export function AcceptConsentForm({ missingTypes }: { missingTypes: ConsentType[
         isDisabled={!allChecked || acceptMutation.isPending}
         className={styles.submit}
       >
-        {acceptMutation.isPending ? "Сохраняем…" : "Продолжить"}
+        {acceptMutation.isPending ? t("submitting") : t("submit")}
       </Button>
     </div>
   );

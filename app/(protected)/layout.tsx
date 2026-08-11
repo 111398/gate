@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { SignOutButton } from "@/features/auth-by-email";
 import { createSupabaseServerClient } from "@/shared/api/supabase/server-client";
 import { ConsentModal } from "@/widgets/consent-modal";
@@ -15,16 +16,18 @@ export default async function ProtectedLayout({ children }: { children: React.Re
     redirect("/login");
   }
 
+  const t = await getTranslations("Layout");
+
   return (
     <div className={styles.wrapper}>
       <header className={styles.header}>
-        <span className={styles.brand}>Gate</span>
+        <span className={styles.brand}>{t("brand")}</span>
         <nav className={styles.nav}>
           <Link href="/chat" className={styles.navLink}>
-            Чат
+            {t("navChat")}
           </Link>
           <Link href="/settings" className={styles.navLink}>
-            Настройки
+            {t("navSettings")}
           </Link>
           <SignOutButton />
         </nav>

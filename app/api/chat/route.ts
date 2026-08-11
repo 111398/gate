@@ -8,9 +8,10 @@ import { retrieveRelevantMemories } from "@/features/send-message/model/retrieve
 import { createFixedTextStreamResponse } from "@/shared/api/chat/fixed-response-stream";
 import { getChatModel } from "@/shared/api/llm/provider";
 import { classifyMessage } from "@/shared/api/safety/classify-message";
+import { getCrisisResponseText } from "@/shared/api/safety/crisis-response";
 import { createSupabaseServerClient } from "@/shared/api/supabase/server-client";
 import { CHAT_KICKOFF_MARKER } from "@/shared/config/persona";
-import { CRISIS_RESPONSE_TEXT, MILD_DISTRESS_REMINDER_PROBABILITY } from "@/shared/config/safety";
+import { MILD_DISTRESS_REMINDER_PROBABILITY } from "@/shared/config/safety";
 import { extractTextFromUIMessage } from "@/shared/lib/extract-text-from-ui-message";
 
 // Единственный streaming-эндпоинт чата — вне tRPC (см. ТЗ п.3).
@@ -62,13 +63,14 @@ export async function POST(req: Request) {
   }
 
   if (isAcuteCrisis) {
+    const crisisResponseText = await getCrisisResponseText();
     await supabase.from("messages").insert({
       persona_id: typedPersona.id,
       sender: "system",
-      content: CRISIS_RESPONSE_TEXT,
+      content: crisisResponseText,
       is_safety_flagged: true,
     });
-    return createFixedTextStreamResponse(CRISIS_RESPONSE_TEXT);
+    return createFixedTextStreamResponse(crisisResponseText);
   }
 
   const includeSupportReminder =
