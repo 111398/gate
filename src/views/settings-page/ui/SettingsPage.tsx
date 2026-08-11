@@ -1,6 +1,15 @@
+import { SendFeedbackForm } from "@/features/send-feedback";
 import { PersonaSettingsPanel } from "@/widgets/persona-settings-panel";
+import styles from "./SettingsPage.module.scss";
 
-// Форма обратной связи (ТЗ п.6.8) добавится отдельно — требует Resend/Upstash.
 export function SettingsPage() {
-  return <PersonaSettingsPanel />;
+  return (
+    <div className={styles.wrapper}>
+      <PersonaSettingsPanel />
+      <section className={styles.feedbackSection}>
+        <h2 className={styles.feedbackTitle}>Обратная связь</h2>
+        <SendFeedbackForm />
+      </section>
+    </div>
+  );
 }

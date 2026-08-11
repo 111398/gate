@@ -1,0 +1,17 @@
+@use "../../../app/styles/tokens" as *;
+
+.wrapper {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.feedbackSection {
+  max-width: 480px;
+  padding: 0 var(--space-4) var(--space-6);
+}
+
+.feedbackTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--font-size-md);
+  font-weight: 700;
+}

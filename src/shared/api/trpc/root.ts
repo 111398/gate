@@ -1,4 +1,5 @@
 import { consentsRouter } from "./routers/consents";
+import { feedbackRouter } from "./routers/feedback";
 import { messagesRouter } from "./routers/messages";
 import { personaRouter } from "./routers/persona";
 import { trainingFilesRouter } from "./routers/training-files";
@@ -9,6 +10,7 @@ export const appRouter = router({
   persona: personaRouter,
   trainingFiles: trainingFilesRouter,
   messages: messagesRouter,
+  feedback: feedbackRouter,
 });
 
 export type AppRouter = typeof appRouter;

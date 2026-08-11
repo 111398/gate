@@ -1,0 +1,48 @@
+@use "../../../app/styles/tokens" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.textareaField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.textareaLabel {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.textarea {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md);
+  resize: vertical;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: -1px;
+    border-color: var(--color-accent);
+  }
+}
+
+.error {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
+}
+
+.success {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-accent);
+}
