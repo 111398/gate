@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gate
 
-## Getting Started
+Приложение-компаньон для людей, переживающих утрату близкого человека. Пользователь загружает текстовые материалы о реальном человеке (экспорт переписки, заметки), приложение строит на их основе RAG-персону и позволяет вести с ней текстовый диалог.
 
-First, run the development server:
+MVP: только текстовый чат, без фото/видео/голоса. PWA на Next.js с прицелом на упаковку в Android-приложение через TWA.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Технологии и сервисы
+
+| Слой | Решение |
+|---|---|
+| Фреймворк | Next.js (App Router), TypeScript |
+| Архитектура | Feature-Sliced Design (FSD) |
+| Стилизация | SCSS Modules, дизайн-токены (light/dark) |
+| UI-примитивы | `react-aria-components` |
+| Auth + БД | Supabase (Postgres, Auth, Storage) |
+| Векторное хранилище | pgvector (расширение Postgres в Supabase) |
+| ORM-слой доступа к данным | Supabase JS client + RLS |
+| API | tRPC + Zod |
+| Кэш на клиенте | TanStack Query (`@trpc/react-query`) |
+| AI-оркестрация / стриминг | Vercel AI SDK (`ai`) |
+| LLM | Groq (`llama-3.3-70b-versatile` — чат и онбординг, `openai/gpt-oss-20b` — классификатор кризисных состояний) |
+| Эмбеддинги | Voyage AI (`voyage-4-lite`, 1024 измерения) |
+| Rate limiting | Upstash Redis (`@upstash/ratelimit`) |
+| Email | Resend |
+| i18n | `next-intl` (RU — основная локаль, EN — подготовлена) |
+| Деплой | Vercel |
+
+Каждый внешний провайдер (LLM, эмбеддинги) спрятан за интерфейсом в `src/shared/api/*`, чтобы смена провайдера не требовала правок в features/widgets.
+
+## Структура проекта
+
+```
+/app          # Next.js App Router — только роутинг и API-роуты
+/src
+  /app        # FSD app-layer: провайдеры, глобальные стили/токены
+  /views      # FSD pages-layer (переименован из-за конфликта имени с Next.js Pages Router)
+  /widgets    # композиции виджетов (chat-window, consent-modal, ...)
+  /features   # пользовательские действия (send-message, upload-training-file, ...)
+  /entities   # доменные модели
+  /shared     # ui-кит, api-клиенты, конфиг, i18n, утилиты
+/supabase/migrations  # SQL-миграции, применяются вручную через Supabase SQL Editor
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Запуск локально
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Требования:** Node.js 22+, [pnpm](https://pnpm.io).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Установить зависимости:
 
-## Learn More
+   ```bash
+   pnpm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. Скопировать `.env.example` в `.env.local` и заполнить значения (Supabase, Groq, Voyage, Upstash, Resend — см. секцию ниже):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   cp .env.example .env.local
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Применить SQL-миграции из `supabase/migrations/` — по порядку номеров, каждую целиком, через **Supabase Dashboard → SQL Editor → New query → Run**.
 
-## Deploy on Vercel
+4. Запустить dev-сервер:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   pnpm dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   Приложение откроется на [http://localhost:3000](http://localhost:3000).
+
+Прочие команды:
+
+```bash
+pnpm build   # production-сборка
+pnpm start   # запуск production-сборки
+pnpm lint    # ESLint
+```
+
+## Переменные окружения
+
+Полный список — в [.env.example](.env.example). Кратко, откуда брать:
+
+- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` — Supabase Dashboard → Project Settings → API.
+- `GROQ_API_KEY` — [console.groq.com](https://console.groq.com) → API Keys.
+- `EMBEDDINGS_API_KEY` — [dashboard.voyageai.com](https://dashboard.voyageai.com) → API Keys.
+- `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` — [console.upstash.com](https://console.upstash.com), Redis-база → REST API.
+- `RESEND_API_KEY` — [resend.com](https://resend.com) → API Keys.
+- `SUPPORT_EMAIL` — адрес, куда форма обратной связи присылает письма.
+- `QSTASH_TOKEN` — зарезервировано под фоновую обработку больших файлов, в MVP не используется (обработка идёт синхронно).
+
+## Деплой
+
+Приложение рассчитано на Vercel без дополнительной инфраструктуры — прописать те же переменные окружения в настройках проекта Vercel и задеплоить из этого репозитория.
