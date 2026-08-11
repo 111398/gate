@@ -20,10 +20,11 @@ function hasCompletedOnboardingTool(parts: { type: string; state?: string }[]): 
 
 export function OnboardingChat({ onCompleted }: { onCompleted: () => void }) {
   const [transport] = useState(() => new DefaultChatTransport({ api: "/api/chat" }));
-  const { messages, sendMessage, status, error } = useChat({ transport });
+  const { messages, sendMessage, status, error, clearError } = useChat({ transport });
   const [input, setInput] = useState("");
   const kickedOffRef = useRef(false);
   const scrollAnchorRef = useRef<HTMLDivElement>(null);
+  const canSubmit = status === "ready" || status === "error";
 
   useEffect(() => {
     if (!kickedOffRef.current && messages.length === 0) {
@@ -52,7 +53,8 @@ export function OnboardingChat({ onCompleted }: { onCompleted: () => void }) {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!input.trim() || status !== "ready") return;
+    if (!input.trim() || !canSubmit) return;
+    if (status === "error") clearError();
     sendMessage({ text: input });
     setInput("");
   }
@@ -101,10 +103,10 @@ export function OnboardingChat({ onCompleted }: { onCompleted: () => void }) {
           value={input}
           onChange={(event) => setInput(event.target.value)}
           placeholder="Напишите сообщение…"
-          disabled={status !== "ready"}
+          disabled={!canSubmit}
           aria-label="Сообщение"
         />
-        <Button type="submit" isDisabled={status !== "ready" || !input.trim()}>
+        <Button type="submit" isDisabled={!canSubmit || !input.trim()}>
           Отправить
         </Button>
       </form>

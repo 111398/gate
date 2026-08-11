@@ -29,9 +29,10 @@ export function ChatWindow() {
 
 function ChatWindowReady({ initialItems }: { initialItems: Parameters<typeof toUIMessages>[0] }) {
   const [initialMessages] = useState(() => toUIMessages(initialItems));
-  const { messages, sendMessage, status, error } = usePersonaChat(initialMessages);
+  const { messages, sendMessage, status, error, clearError } = usePersonaChat(initialMessages);
   const [input, setInput] = useState("");
   const scrollAnchorRef = useRef<HTMLDivElement>(null);
+  const canSubmit = status === "ready" || status === "error";
 
   useEffect(() => {
     scrollAnchorRef.current?.scrollIntoView({ block: "end" });
@@ -39,7 +40,8 @@ function ChatWindowReady({ initialItems }: { initialItems: Parameters<typeof toU
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!input.trim() || status !== "ready") return;
+    if (!input.trim() || !canSubmit) return;
+    if (status === "error") clearError();
     sendMessage({ text: input });
     setInput("");
   }
@@ -87,10 +89,10 @@ function ChatWindowReady({ initialItems }: { initialItems: Parameters<typeof toU
           value={input}
           onChange={(event) => setInput(event.target.value)}
           placeholder="Напишите сообщение…"
-          disabled={status !== "ready"}
+          disabled={!canSubmit}
           aria-label="Сообщение"
         />
-        <Button type="submit" isDisabled={status !== "ready" || !input.trim()}>
+        <Button type="submit" isDisabled={!canSubmit || !input.trim()}>
           Отправить
         </Button>
       </form>

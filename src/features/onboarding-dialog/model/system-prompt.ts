@@ -1,7 +1,7 @@
 import type { Persona } from "@/entities/persona";
 import { CHAT_KICKOFF_MARKER, INTERACTION_FREQUENCY_LABELS } from "@/shared/config/persona";
 
-export function buildOnboardingSystemPrompt(persona: Persona): string {
+export function buildOnboardingSystemPrompt(persona: Persona, includeSupportReminder = false): string {
   const knownFacts = [
     persona.name && `Имя: ${persona.name}`,
     persona.age && `Возраст: ${persona.age}`,
@@ -45,5 +45,12 @@ ${knownFacts.length > 0 ? `Уже известно о персоне:\n${knownFa
 
 Техническая деталь: первое сообщение пользователя в диалоге может быть служебным
 маркером "${CHAT_KICKOFF_MARKER}" — если ты его видишь, не упоминай и не комментируй
-этот текст, просто начни разговор сам: поздоровайся и переходи к задаче 1.`;
+этот текст, просто начни разговор сам: поздоровайся и переходи к задаче 1.
+${
+  includeSupportReminder
+    ? `\nПользователь сейчас, похоже, переживает тяжёлые эмоции (без признаков острого кризиса). В конце
+своей реплики одной короткой отдельной фразой мягко, без нажима, напомни, что рядом есть профессиональная
+поддержка (психологи, специалисты по горю). Не делай это основной темой ответа и не повторяй в каждой реплике.`
+    : ""
+}`;
 }
