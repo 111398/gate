@@ -25,10 +25,13 @@ export const messagesRouter = router({
       if (personaError) throw new Error(personaError.message);
       if (!persona) return { items: [], nextCursor: null as string | null };
 
+      // 'onboarding' — сообщения онбординга и supplement-сессий из настроек, не
+      // показываются в основном чате (см. app/api/chat/route.ts).
       let query = ctx.supabase
         .from("messages")
         .select("id, sender, content, is_safety_flagged, created_at")
         .eq("persona_id", persona.id)
+        .eq("phase", "main")
         .order("created_at", { ascending: false })
         .limit(limit + 1);
 

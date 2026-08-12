@@ -2,6 +2,7 @@ import "server-only";
 import { tool } from "ai";
 import { z } from "zod";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { buildUpdatePersonaProfileTool } from "@/entities/persona/api/update-profile-tool";
 import { INTERACTION_FREQUENCIES } from "@/shared/config/persona";
 
 export function buildOnboardingTools({
@@ -12,31 +13,7 @@ export function buildOnboardingTools({
   personaId: string;
 }) {
   return {
-    updatePersonaProfile: tool({
-      description:
-        "Сохранить или обновить известные сведения о человеке, которому посвящена персона. Можно вызывать несколько раз по мере разговора, передавая только те поля, которые только что стали известны.",
-      inputSchema: z.object({
-        name: z.string().min(1).optional().describe("Имя человека"),
-        age: z.number().int().positive().max(130).optional().describe("Возраст"),
-        relationship: z.string().min(1).optional().describe("Кем приходится пользователю, например «мама», «муж», «друг»"),
-        characterNotes: z.string().min(1).optional().describe("Краткое описание характера, привычек, манеры речи"),
-      }),
-      execute: async (input) => {
-        const patch: Record<string, string | number> = {};
-        if (input.name) patch.name = input.name;
-        if (input.age) patch.age = input.age;
-        if (input.relationship) patch.relationship = input.relationship;
-        if (input.characterNotes) patch.character_notes = input.characterNotes;
-
-        if (Object.keys(patch).length === 0) {
-          return { saved: false, reason: "Не передано ни одного поля" };
-        }
-
-        const { error } = await supabase.from("personas").update(patch).eq("id", personaId);
-        if (error) return { saved: false, reason: error.message };
-        return { saved: true, patch };
-      },
-    }),
+    updatePersonaProfile: buildUpdatePersonaProfileTool({ supabase, personaId }),
 
     completeOnboarding: tool({
       description:

@@ -80,6 +80,7 @@
   "Settings": {
     "personaSectionTitle": "Persona",
     "personaNoName": "No name",
+    "supplementPersona": "Add more details about the persona",
     "frequencyLabel": "Message frequency from the persona",
     "frequencyOptions": {
       "daily": "Every day",

@@ -37,6 +37,26 @@
   color: var(--color-text-secondary);
 }
 
+.trainLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  height: 44px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-secondary);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--color-border);
+  }
+}
+
 .consentList {
   list-style: none;
   margin: 0;
