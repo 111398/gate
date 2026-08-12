@@ -6,6 +6,7 @@ import { DeletePersonaButton } from "@/features/delete-persona";
 import { InteractionFrequencySelect } from "@/features/set-interaction-frequency";
 import { trpc } from "@/shared/api/trpc/client";
 import type { ConsentType } from "@/shared/config/consents";
+import { SettingsSection } from "@/shared/ui/SettingsSection";
 import styles from "./PersonaSettingsPanel.module.scss";
 
 export function PersonaSettingsPanel() {
@@ -21,18 +22,16 @@ export function PersonaSettingsPanel() {
   }
 
   return (
-    <div className={styles.wrapper}>
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>{t("personaSectionTitle")}</h2>
+    <>
+      <SettingsSection title={t("personaSectionTitle")}>
         <p className={styles.personaName}>{persona.name || t("personaNoName")}</p>
         <InteractionFrequencySelect value={persona.interaction_frequency} />
         <Link href="/settings/train" className={styles.trainLink}>
           {t("supplementPersona")}
         </Link>
-      </section>
+      </SettingsSection>
 
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>{t("consentsSectionTitle")}</h2>
+      <SettingsSection title={t("consentsSectionTitle")}>
         <ul className={styles.consentList}>
           {(consents ?? []).map((consent) => (
             <li key={`${consent.consent_type}-${consent.accepted_at}`} className={styles.consentItem}>
@@ -41,12 +40,11 @@ export function PersonaSettingsPanel() {
             </li>
           ))}
         </ul>
-      </section>
+      </SettingsSection>
 
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>{t("dangerZoneTitle")}</h2>
+      <SettingsSection title={t("dangerZoneTitle")}>
         <DeletePersonaButton />
-      </section>
-    </div>
+      </SettingsSection>
+    </>
   );
 }

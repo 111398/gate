@@ -1,0 +1,27 @@
+@use "../src/app/styles/tokens" as *;
+
+// Блокировка альбомной ориентации на мобильных — PWA-приложение должно
+// использоваться только вертикально. max-height ловит именно телефон в
+// landscape (высота вьюпорта там обычно <= ~430px); десктоп/планшет в
+// landscape выше и оверлей не показывают. Manifest.orientation дублирует
+// это для установленного PWA на Android, но не работает в обычной вкладке
+// и не поддерживается iOS Safari вовсе — отсюда CSS-фолбэк.
+.rotateOverlay {
+  display: none;
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .rotateOverlay {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
+    background: var(--color-bg);
+    color: var(--color-text);
+    text-align: center;
+    font-size: var(--font-size-md);
+  }
+}

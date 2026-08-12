@@ -8,7 +8,8 @@
     "navChat": "Чат",
     "navSettings": "Настройки",
     "signOut": "Выйти",
-    "localeSwitchLabel": "Язык интерфейса"
+    "localeSwitchLabel": "Язык интерфейса",
+    "rotatePrompt": "Поверните устройство вертикально, чтобы использовать приложение"
   },
   "Auth": {
     "loginSubtitle": "Войдите в аккаунт",

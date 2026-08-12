@@ -9,6 +9,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Приложение-компаньон для переживающих утрату близкого человека",
     start_url: "/",
     display: "standalone",
+    orientation: "portrait-primary",
     background_color: "#ffffff",
     theme_color: "#2f80ed",
     icons: [
