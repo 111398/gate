@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Providers } from "@/app/providers";
-import { DEFAULT_LOCALE } from "@/shared/config/i18n";
 import "@/app/styles/globals.scss";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,9 +18,11 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const locale = await getLocale();
+
   return (
-    <html lang={DEFAULT_LOCALE}>
+    <html lang={locale}>
       <body>
         <Providers>{children}</Providers>
       </body>

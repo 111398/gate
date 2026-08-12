@@ -7,7 +7,8 @@
     "brand": "Gate",
     "navChat": "Чат",
     "navSettings": "Настройки",
-    "signOut": "Выйти"
+    "signOut": "Выйти",
+    "localeSwitchLabel": "Язык интерфейса"
   },
   "Auth": {
     "loginSubtitle": "Войдите в аккаунт",

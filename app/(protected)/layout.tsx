@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { SignOutButton } from "@/features/auth-by-email";
+import { LocaleSwitch } from "@/features/switch-locale";
 import { createSupabaseServerClient } from "@/shared/api/supabase/server-client";
+import type { Locale } from "@/shared/config/i18n";
 import { ConsentModal } from "@/widgets/consent-modal";
 import styles from "./layout.module.scss";
 
@@ -17,6 +19,7 @@ export default async function ProtectedLayout({ children }: { children: React.Re
   }
 
   const t = await getTranslations("Layout");
+  const locale = await getLocale();
 
   return (
     <div className={styles.wrapper}>
@@ -29,6 +32,7 @@ export default async function ProtectedLayout({ children }: { children: React.Re
           <Link href="/settings" className={styles.navLink}>
             {t("navSettings")}
           </Link>
+          <LocaleSwitch locale={locale as Locale} />
           <SignOutButton />
         </nav>
       </header>
