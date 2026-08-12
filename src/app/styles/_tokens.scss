@@ -47,22 +47,23 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #18181b;
-    --color-bg-secondary: #1f1f23;
-    --color-surface: #232327;
-    --color-border: #2c2c31;
-    --color-text: #f4f4f5;
-    --color-text-secondary: #a1a1aa;
-    --color-accent: #5b9bf7;
-    --color-accent-contrast: #0b0b0c;
-    --color-danger: #f87171;
-    --color-bubble-user: #5b9bf7;
-    --color-bubble-user-text: #0b0b0c;
-    --color-bubble-persona: #2c2c31;
-    --color-bubble-persona-text: #f4f4f5;
+// Тема управляется вручную через data-theme на <html> (переключатель в
+// настройках + localStorage), а не через prefers-color-scheme — по умолчанию
+// всегда светлая, независимо от настроек ОС. Палитра — в духе Telegram Desktop.
+:root[data-theme="dark"] {
+  --color-bg: #0e1621;
+  --color-bg-secondary: #17212b;
+  --color-surface: #182533;
+  --color-border: #101921;
+  --color-text: #e1e1e1;
+  --color-text-secondary: #7d8b99;
+  --color-accent: #5288c1;
+  --color-accent-contrast: #ffffff;
+  --color-danger: #f2726c;
+  --color-bubble-user: #2b5278;
+  --color-bubble-user-text: #ffffff;
+  --color-bubble-persona: #182533;
+  --color-bubble-persona-text: #e1e1e1;
 
-    color-scheme: dark;
-  }
+  color-scheme: dark;
 }

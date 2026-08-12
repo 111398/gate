@@ -83,6 +83,9 @@
     "personaSectionTitle": "Персона",
     "personaNoName": "Без имени",
     "supplementPersona": "Дополнить данные о персоне",
+    "themeSectionTitle": "Тема оформления",
+    "themeLight": "Светлая",
+    "themeDark": "Тёмная",
     "frequencyLabel": "Частота сообщений от персоны",
     "frequencyOptions": {
       "daily": "Каждый день",
