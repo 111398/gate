@@ -34,7 +34,10 @@ export function SignUpForm() {
     setIsSubmitting(true);
 
     const supabase = createSupabaseBrowserClient();
-    const { data, error } = await supabase.auth.signUp(parsed.data);
+    const { data, error } = await supabase.auth.signUp({
+      ...parsed.data,
+      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+    });
 
     setIsSubmitting(false);
 
