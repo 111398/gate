@@ -8,7 +8,8 @@
     "navChat": "Chat",
     "navSettings": "Settings",
     "signOut": "Sign out",
-    "localeSwitchLabel": "Interface language"
+    "localeSwitchLabel": "Interface language",
+    "rotatePrompt": "Please rotate your device to portrait to use the app"
   },
   "Auth": {
     "loginSubtitle": "Sign in to your account",
