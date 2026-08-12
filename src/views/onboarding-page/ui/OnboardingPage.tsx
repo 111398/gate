@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { OnboardingChat } from "@/features/onboarding-dialog";
 import { trpc } from "@/shared/api/trpc/client";
+import { TrainingChatShell } from "@/widgets/training-chat";
 import styles from "./OnboardingPage.module.scss";
 
 export function OnboardingPage() {
@@ -38,7 +38,7 @@ export function OnboardingPage() {
 
   return (
     <div className={styles.wrapper}>
-      <OnboardingChat onCompleted={() => utils.persona.getCurrent.invalidate()} />
+      <TrainingChatShell mode="onboarding" onCompleted={() => utils.persona.getCurrent.invalidate()} />
     </div>
   );
 }

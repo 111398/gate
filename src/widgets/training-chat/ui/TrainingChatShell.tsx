@@ -4,9 +4,17 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { useTranslations } from "next-intl";
+import { FileUploadPanel } from "@/widgets/file-upload-panel";
 import { Button } from "@/shared/ui/Button";
 import { CHAT_KICKOFF_MARKER } from "@/shared/config/persona";
-import styles from "./OnboardingChat.module.scss";
+import styles from "./TrainingChatShell.module.scss";
+
+type TrainingChatMode = "onboarding" | "supplement";
+
+const COMPLETION_TOOL_BY_MODE: Record<TrainingChatMode, string> = {
+  onboarding: "tool-completeOnboarding",
+  supplement: "tool-finishTrainingSession",
+};
 
 function messageText(parts: { type: string; text?: string }[]): string {
   return parts
@@ -15,18 +23,27 @@ function messageText(parts: { type: string; text?: string }[]): string {
     .join("");
 }
 
-function hasCompletedOnboardingTool(parts: { type: string; state?: string }[]): boolean {
-  return parts.some((part) => part.type === "tool-completeOnboarding" && part.state === "output-available");
+function hasCompletionTool(parts: { type: string; state?: string }[], toolPartType: string): boolean {
+  return parts.some((part) => part.type === toolPartType && part.state === "output-available");
 }
 
-export function OnboardingChat({ onCompleted }: { onCompleted: () => void }) {
+export function TrainingChatShell({ mode, onCompleted }: { mode: TrainingChatMode; onCompleted: () => void }) {
   const t = useTranslations("Chat");
-  const [transport] = useState(() => new DefaultChatTransport({ api: "/api/chat" }));
+  const tChatPage = useTranslations("ChatPage");
+  const [transport] = useState(
+    () =>
+      new DefaultChatTransport({
+        api: "/api/chat",
+        body: mode === "supplement" ? { trainingMode: true } : undefined,
+      })
+  );
   const { messages, sendMessage, status, error, clearError } = useChat({ transport });
   const [input, setInput] = useState("");
+  const [showUpload, setShowUpload] = useState(false);
   const kickedOffRef = useRef(false);
   const scrollAnchorRef = useRef<HTMLDivElement>(null);
   const canSubmit = status === "ready" || status === "error";
+  const completionToolType = COMPLETION_TOOL_BY_MODE[mode];
 
   useEffect(() => {
     if (!kickedOffRef.current && messages.length === 0) {
@@ -35,19 +52,19 @@ export function OnboardingChat({ onCompleted }: { onCompleted: () => void }) {
     }
   }, [messages.length, sendMessage]);
 
-  // Онбординг завершается инструментом completeOnboarding (см. app/api/chat/route.ts).
-  // Ждём, пока модель дострит прощальную реплику (status === 'ready'), и только
-  // после паузы, чтобы пользователь успел её прочитать, просим родителя перепроверить
-  // статус персоны — переход на /chat делает OnboardingPage по реальному статусу из БД,
-  // а не этот компонент по факту получения tool-части.
+  // Сессия завершается инструментом completeOnboarding/finishTrainingSession
+  // (см. app/api/chat/route.ts). Ждём, пока модель дострит прощальную реплику
+  // (status === 'ready'), и только после паузы, чтобы пользователь успел её
+  // прочитать, просим родителя перепроверить статус/данные персоны — сам
+  // редирект делает страница по реальному состоянию из БД, а не этот компонент.
   useEffect(() => {
     if (status !== "ready") return;
     const last = messages[messages.length - 1];
-    if (!last || last.role !== "assistant" || !hasCompletedOnboardingTool(last.parts)) return;
+    if (!last || last.role !== "assistant" || !hasCompletionTool(last.parts, completionToolType)) return;
 
     const timeout = setTimeout(onCompleted, 1500);
     return () => clearTimeout(timeout);
-  }, [messages, status, onCompleted]);
+  }, [messages, status, onCompleted, completionToolType]);
 
   useEffect(() => {
     scrollAnchorRef.current?.scrollIntoView({ block: "end" });
@@ -72,6 +89,18 @@ export function OnboardingChat({ onCompleted }: { onCompleted: () => void }) {
 
   return (
     <div className={styles.wrapper}>
+      <div className={styles.toolbar}>
+        <Button variant="secondary" onPress={() => setShowUpload((value) => !value)}>
+          {showUpload ? tChatPage("hideUpload") : tChatPage("showUpload")}
+        </Button>
+      </div>
+
+      {showUpload && (
+        <div className={styles.uploadSection}>
+          <FileUploadPanel />
+        </div>
+      )}
+
       <div className={styles.messages}>
         {visibleMessages.map((message) => {
           const text = messageText(message.parts);

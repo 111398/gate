@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
 import { DeletePersonaButton } from "@/features/delete-persona";
 import { InteractionFrequencySelect } from "@/features/set-interaction-frequency";
@@ -25,6 +26,9 @@ export function PersonaSettingsPanel() {
         <h2 className={styles.sectionTitle}>{t("personaSectionTitle")}</h2>
         <p className={styles.personaName}>{persona.name || t("personaNoName")}</p>
         <InteractionFrequencySelect value={persona.interaction_frequency} />
+        <Link href="/settings/train" className={styles.trainLink}>
+          {t("supplementPersona")}
+        </Link>
       </section>
 
       <section className={styles.section}>

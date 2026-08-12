@@ -80,6 +80,7 @@
   "Settings": {
     "personaSectionTitle": "Персона",
     "personaNoName": "Без имени",
+    "supplementPersona": "Дополнить данные о персоне",
     "frequencyLabel": "Частота сообщений от персоны",
     "frequencyOptions": {
       "daily": "Каждый день",
