@@ -6,20 +6,6 @@
   flex-direction: column;
 }
 
-.toolbar {
-  flex: none;
-  display: flex;
-  justify-content: flex-end;
-  padding: var(--space-3) var(--space-4) 0;
-}
-
-.uploadSection {
-  flex: none;
-  max-height: 40%;
-  overflow-y: auto;
-  border-bottom: 1px solid var(--color-border);
-}
-
 .chatSection {
   flex: 1;
   min-height: 0;
