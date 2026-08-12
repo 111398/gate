@@ -117,5 +117,13 @@
   "Offline": {
     "title": "You're offline",
     "body": "Looks like there's no internet connection right now. Check your connection and reload the page."
+  },
+  "Landing": {
+    "greeting": "Welcome from the Gate team",
+    "intro": "We built this app hoping it could make it a little easier to carry the loss of someone close. Here you can continue the conversation with the person you miss — say the things that were left unsaid, remember how they spoke and who they were.",
+    "disclaimer": "Please note: Gate does not replace a real person and is not a substitute for real human connection or professional psychological help. If you're struggling to cope with the loss, please reach out to specialists or people close to you.",
+    "cta": "Try it",
+    "haveAccount": "Already have an account?",
+    "signInLink": "Sign in"
   }
 }
