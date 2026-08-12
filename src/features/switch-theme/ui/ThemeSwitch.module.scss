@@ -1,0 +1,18 @@
+@use "../../../app/styles/tokens" as *;
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.label,
+.activeLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.activeLabel {
+  color: var(--color-text);
+  font-weight: 700;
+}

@@ -83,6 +83,9 @@
     "personaSectionTitle": "Persona",
     "personaNoName": "No name",
     "supplementPersona": "Add more details about the persona",
+    "themeSectionTitle": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
     "frequencyLabel": "Message frequency from the persona",
     "frequencyOptions": {
       "daily": "Every day",
