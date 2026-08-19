@@ -4,8 +4,14 @@ import type { LanguageModel } from "ai";
 
 // Единая точка абстракции над LLM-провайдером — смена провайдера ограничивается
 // этим файлом, остальной код зависит только от getChatModel()/getClassifierModel().
+//
+// llama-3.3-70b-versatile (и вообще все модели Llama) сняты Groq с обслуживания —
+// вызовы стали возвращать 404 model_not_found, из-за чего сломался и онбординг,
+// и основной чат. Groq теперь хостит вместо Llama свои openai/gpt-oss-* — 120b
+// сопоставим по размеру/качеству с прежней 70b-моделью и поддерживает tool calling
+// (проверено вручную: корректно вызывает updatePersonaProfile).
 export function getChatModel(): LanguageModel {
-  return groq("llama-3.3-70b-versatile");
+  return groq("openai/gpt-oss-120b");
 }
 
 // Отдельная модель для классификатора кризисных состояний (ТЗ п.6.5) — намеренно
