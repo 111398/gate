@@ -18,7 +18,7 @@ MVP: только текстовый чат, без фото/видео/голо
 | API | tRPC + Zod |
 | Кэш на клиенте | TanStack Query (`@trpc/react-query`) |
 | AI-оркестрация / стриминг | Vercel AI SDK (`ai`) |
-| LLM | Groq (`llama-3.3-70b-versatile` — чат и онбординг, `openai/gpt-oss-20b` — классификатор кризисных состояний) |
+| LLM | Groq (`openai/gpt-oss-120b` — чат и онбординг, `openai/gpt-oss-20b` — классификатор кризисных состояний) |
 | Эмбеддинги | Voyage AI (`voyage-4-lite`, 1024 измерения) |
 | Rate limiting | Upstash Redis (`@upstash/ratelimit`) |
 | Email | Resend |
