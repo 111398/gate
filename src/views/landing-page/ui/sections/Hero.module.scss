@@ -1,0 +1,86 @@
+@use "../../../../app/styles/tokens" as *;
+@use "./ctaButton";
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  padding: var(--space-7) var(--space-5) calc(var(--space-7) + var(--space-5));
+  background: linear-gradient(180deg, var(--gradient-hero-start), var(--gradient-hero-end));
+}
+
+.glow {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  width: 640px;
+  height: 640px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-warm-accent) 22%, transparent) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.greeting {
+  margin: 0;
+  font-size: clamp(var(--font-size-xl), 5vw, 2.5rem);
+  line-height: var(--line-height-tight);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.intro {
+  margin: 0;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+  max-width: 52ch;
+}
+
+.disclaimer {
+  margin: var(--space-2) 0 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+  border: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+  max-width: 56ch;
+}
+
+.cta {
+  @include ctaButton.warmCta;
+}
+
+.switchLink {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+
+  a {
+    color: var(--color-warm-accent);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
