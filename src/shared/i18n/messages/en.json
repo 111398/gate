@@ -124,11 +124,54 @@
     "body": "Looks like there's no internet connection right now. Check your connection and reload the page."
   },
   "Landing": {
-    "greeting": "Welcome from the Gate team",
-    "intro": "We built this app hoping it could make it a little easier to carry the loss of someone close. Here you can continue the conversation with the person you miss — say the things that were left unsaid, remember how they spoke and who they were.",
-    "disclaimer": "Please note: Gate does not replace a real person and is not a substitute for real human connection or professional psychological help. If you're struggling to cope with the loss, please reach out to specialists or people close to you.",
-    "cta": "Try it",
-    "haveAccount": "Already have an account?",
-    "signInLink": "Sign in"
+    "nav": {
+      "login": "Sign in"
+    },
+    "hero": {
+      "greeting": "Welcome from the Gate team",
+      "intro": "We built this app hoping to make it a little easier to live through the loss of someone close. Here you can continue a conversation with the person you miss — say what was left unsaid, remember how they spoke and who they were.",
+      "disclaimer": "Important: Gate does not replace a real person and is not a substitute for live human connection or professional psychological help. If you're struggling with loss, please reach out to specialists or people close to you.",
+      "cta": "Try it",
+      "haveAccount": "Already have an account?",
+      "signInLink": "Sign in"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "steps": [
+        { "title": "Share materials", "body": "Upload conversations, letters, or notes about the person — their persona is built from these." },
+        { "title": "We build a persona", "body": "Gate carefully studies their manner of speech and character and puts together a persona — based only on what you upload." },
+        { "title": "Continue the conversation", "body": "Say what was left unsaid — the persona responds in the character of the person you miss." }
+      ]
+    },
+    "values": {
+      "title": "What we care about",
+      "items": [
+        { "title": "Privacy", "body": "All materials are stored privately and used only for your persona. You can delete everything at any time — from settings, permanently." },
+        { "title": "Not a substitute for a specialist", "body": "Gate does not replace a real person and is not a substitute for live human connection or professional psychological help. If it gets hard, please reach out to people close to you or specialists." },
+        { "title": "You're always in control", "body": "Talk at your own pace — from daily messages to complete silence until you write first. Settings are available any time." }
+      ]
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "items": [
+        { "question": "What is Gate?", "answer": "Gate is a companion app for people living through the loss of someone close. You upload conversations or notes about the person, and the app creates their persona so you can say what was left unsaid." },
+        { "question": "What happens to my data?", "answer": "Uploaded materials are stored privately and used only to train your persona. You can permanently delete the persona and all data at any time, from settings." },
+        { "question": "Is it free?", "answer": "Yes, Gate is currently free to use." },
+        { "question": "Who can sign up?", "answer": "Registration is currently only available with a .ru domain email." },
+        { "question": "What if a conversation becomes too hard?", "answer": "Gate is not a substitute for a specialist. If a conversation becomes difficult, the app will show a free psychological helpline number. Please reach out to specialists or people close to you if you need to." }
+      ]
+    },
+    "finalCta": {
+      "title": "Ready to begin?",
+      "body": "Say what was left unsaid.",
+      "cta": "Try it"
+    },
+    "footer": {
+      "tagline": "A companion app for people living through loss",
+      "navHowItWorks": "How it works",
+      "navFaq": "FAQ",
+      "navLogin": "Sign in",
+      "copyright": "© {year} Gate"
+    }
   }
 }

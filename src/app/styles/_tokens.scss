@@ -44,6 +44,19 @@
   --color-bubble-persona: #f4f4f5;
   --color-bubble-persona-text: #18181b;
 
+  // Тёплые акцентные токены — только для hero/final-CTA секций лендинга
+  // (эмоциональный, "домашний" тон для темы утраты). Не заменяют
+  // --color-accent, который остаётся холодным Telegram-синим для всего
+  // остального интерфейса. --color-warm-accent-contrast — цвет текста
+  // поверх --color-warm-accent: в отличие от --color-accent-contrast
+  // (всегда белый), тут нужна отдельная пара на тему, т.к.
+  // --color-warm-accent в тёмной теме светлый, а не тёмный —
+  // белый текст на нём проваливается по контрасту (WCAG AA).
+  --color-warm-accent: #b8582f;
+  --color-warm-accent-contrast: #ffffff;
+  --gradient-hero-start: #fdf1e4;
+  --gradient-hero-end: #f7ddc4;
+
   color-scheme: light;
 }
 
@@ -64,6 +77,13 @@
   --color-bubble-user-text: #ffffff;
   --color-bubble-persona: #182533;
   --color-bubble-persona-text: #e1e1e1;
+
+  // Приглушённые варианты тёплых токенов — тот же тёплый тон, но
+  // притемнённый/десатурированный, чтобы не резать глаз на тёмном фоне.
+  --color-warm-accent: #d99263;
+  --color-warm-accent-contrast: #1e1712;
+  --gradient-hero-start: #1e1712;
+  --gradient-hero-end: #17212b;
 
   color-scheme: dark;
 }

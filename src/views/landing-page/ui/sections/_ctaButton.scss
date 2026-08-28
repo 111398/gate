@@ -1,0 +1,26 @@
+// Общий стиль тёплой CTA-кнопки лендинга (Hero + FinalCta) — вынесен сюда,
+// чтобы не дублировать один и тот же блок в двух .module.scss.
+@mixin warmCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  margin-top: var(--space-2);
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  background: var(--color-warm-accent);
+  color: var(--color-warm-accent-contrast);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.15s ease, transform 0.05s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
