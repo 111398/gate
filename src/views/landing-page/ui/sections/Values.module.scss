@@ -2,6 +2,9 @@
 
 .section {
   padding: var(--space-7) var(--space-5);
+  // width: 100% обязателен вместе с max-width + margin: 0 auto — см.
+  // комментарий в Faq.module.scss (тот же паттерн, тот же риск).
+  width: 100%;
   max-width: 1040px;
   margin: 0 auto;
   background: var(--color-bg-secondary);
